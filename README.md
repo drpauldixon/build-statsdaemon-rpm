@@ -2,6 +2,10 @@
 
 This is to build for EL7 only.
 
+See: https://github.com/bitly/statsdaemon
+
+statsdaemon is a statsd replacement written in go-lang. It's simpler to install since it's a single binary vs an install of nodejs + statsd.
+
 ## Using Docker
 
 This will place an RPM file into the `rpms` directory
