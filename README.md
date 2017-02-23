@@ -24,7 +24,7 @@ docker run -t -i -v $PWD:/shared centosdev:7 /shared/build.sh
 
 ## Versions
 
-
+If you want to install a different version, e.g. v0.7, you can override the `STATSDAEMON_BINARY_URL` environment variable.
 ```
 docker run -t -i -v $PWD:/shared -e STATSDAEMON_BINARY_URL='https://github.com/bitly/statsdaemon/releases/download/v0.7/statsdaemon-0.7.linux-amd64.go1.4.2.tar.gz' centosdev:7 /shared/build.sh 
 ```
