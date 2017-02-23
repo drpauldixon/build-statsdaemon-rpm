@@ -36,3 +36,47 @@ Once you've finished with the docker image, you can remove it via:
 ```
 docker image rm -f centosdev:7
 ```
+
+## Installation / config
+
+Once you have the RPM, you can drop it into your local yum repo and install via yum, or install directly using rpm:
+
+**Via yum:**
+
+```
+yum install statsdaemon
+```
+
+**Via rpm**
+
+```
+rpm -ivh statsdaemon-0.7.1-1.x86_64.rpm
+```
+
+### Config
+
+The rpm installs a basic systemd unit file: `/etc/systemd/system/statsdaemon.service` (for example purposes only)
+
+You'll need to update that for your own config (i.e. graphite server host etc). For example:
+
+```
+[Unit]
+Description=statsd daemon (statsdaemon).
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/statsdaemon -address=127.0.0.1:8125 -flush-interval=10 -graphite=10.10.1.1:2003 -percent-threshold=75 -percent-threshold=90 -percent-threshold=99 -prefix=stats.production.webserver01.
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then to enable and start the service, run:
+
+```
+systemctl enable statsdaemon
+systemctl start statsdaemon
+journalctl -u statsdaemon   # to view log output
+```
+
+This is just the bare bones - most people will be using a config management system (e.g. ansible / puppet / chef) to perform the install, deploy the config (which is in the systemd unit file) and start the service.
